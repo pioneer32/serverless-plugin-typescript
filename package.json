@@ -13,6 +13,7 @@
     "lint": "tslint -c tslint.json 'src/**/*.ts'",
     "prepare-release": "standard-version",
     "prepublish": "npm run build",
+    "postinstall": "npm run build",
     "precommit": "npm run test",
     "pretest": "npm run lint",
     "test": "jest"
