@@ -70,6 +70,15 @@ custom:
 
 ```
 
+### Using within a monorepo or pnpm (hoisted dependencies which are sym-linked into local node_modules)
+Set followSymLinks to true in your severless.yaml to enable following symlinks, when packaging 
+```
+custom:
+  serverlessPluginTypescript:
+    followSymLinks: true
+
+```
+
 ## Usage
 
 ### Google Cloud Functions

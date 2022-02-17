@@ -20,6 +20,7 @@ declare namespace Serverless {
       custom?: {
         serverlessPluginTypescript?: {
           tsConfigFileLocation: string
+          followSymLinks: boolean
         }
       }
     }

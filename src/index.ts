@@ -191,6 +191,7 @@ export class TypeScriptPlugin {
     // include any "extras" from the "include" section
     if (patterns.length > 0) {
       const files = await globby(patterns)
+      const followSymLinks = !!this.serverless.service.custom?.serverlessPluginTypescript?.followSymLinks
 
       for (const filename of files) {
         const destFileName = path.resolve(path.join(BUILD_FOLDER, filename))
@@ -201,7 +202,7 @@ export class TypeScriptPlugin {
         }
 
         if (!fs.existsSync(destFileName)) {
-          fs.copySync(path.resolve(filename), path.resolve(path.join(BUILD_FOLDER, filename)))
+          fs.copySync(path.resolve(filename), path.resolve(path.join(BUILD_FOLDER, filename)), { dereference: followSymLinks })
         }
       }
     }
@@ -218,13 +219,15 @@ export class TypeScriptPlugin {
 
     // copy development dependencies during packaging
     if (isPackaging) {
+      const followSymLinks = !!this.serverless.service.custom?.serverlessPluginTypescript?.followSymLinks
       if (fs.existsSync(outModulesPath)) {
         fs.unlinkSync(outModulesPath)
       }
 
       fs.copySync(
         path.resolve('node_modules'),
-        path.resolve(path.join(BUILD_FOLDER, 'node_modules'))
+        path.resolve(path.join(BUILD_FOLDER, 'node_modules')),
+      { dereference: followSymLinks }
       )
     } else {
       if (!fs.existsSync(outModulesPath)) {
